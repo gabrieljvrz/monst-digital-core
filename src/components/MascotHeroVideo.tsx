@@ -1,6 +1,7 @@
-import mascotMotion from "@/assets/mascote-hero-alpha.webp";
-import mascotPoster from "@/assets/mascote-hero-poster-640.png";
 import "./mascot-hero.css";
+
+const mascotMotion = "/assets/mascote-hero-alpha.webp";
+const mascotPoster = "/assets/mascote-hero-poster-640.png";
 
 export function MascotHeroVideo() {
   return (
