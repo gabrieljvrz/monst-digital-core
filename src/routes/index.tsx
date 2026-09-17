@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
-  ArrowDownRight, ArrowRight, Bag, ChevronRight, CircleUserRound, Clock3,
+  ArrowDownRight, ArrowRight, ChevronRight, CircleUserRound, Clock3,
   Dumbbell, Instagram, MapPin, Menu, Minus, PackageCheck, Plus, Search,
   ShieldCheck, ShoppingBag, Sparkles, Star, Trash2, Truck, X,
 } from "lucide-react";
@@ -42,7 +42,7 @@ const products: Product[] = [
   { id: 6, name: "Kit Monst Performance", category: "Kits", price: 299.9, oldPrice: 349.9, flavor: "Rotina completa", shape: "pouch" },
 ];
 
-const categories = [
+const categories: Array<[string, string, string]> = [
   ["01", "Whey Protein", "Proteína para grandes conquistas."],
   ["02", "Creatina", "Força real, todos os dias."],
   ["03", "Pré-Treino", "Energia antes do primeiro rep."],
@@ -78,6 +78,7 @@ function MonstStore() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("Todos");
+  const navigation: Array<[string, string]> = [["Início","inicio"],["Produtos","produtos"],["Categorias","categorias"],["Kits","kits"],["Sobre a MONST","sobre"],["Contato","contato"]];
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("is-visible")), { threshold: 0.14 });
@@ -106,7 +107,7 @@ function MonstStore() {
       <header className="site-header">
         <a href="#inicio" className="shrink-0"><BrandMark compact /></a>
         <nav className="desktop-nav" aria-label="Navegação principal">
-          {[["Início","inicio"],["Produtos","produtos"],["Categorias","categorias"],["Kits","kits"],["Sobre a MONST","sobre"],["Contato","contato"]].map(([label,id]) => <button key={id} onClick={() => scrollTo(id)}>{label}</button>)}
+          {navigation.map(([label,id]) => <button key={id} onClick={() => scrollTo(id)}>{label}</button>)}
         </nav>
         <div className="header-actions">
           <Button variant="ghost" size="icon" aria-label="Pesquisar" onClick={() => setSearchOpen(true)}><Search /></Button>
@@ -120,7 +121,7 @@ function MonstStore() {
       <div className={`mobile-panel ${menuOpen ? "open" : ""}`} aria-hidden={!menuOpen}>
         <Button variant="ghost" size="icon" aria-label="Fechar menu" onClick={() => setMenuOpen(false)}><X /></Button>
         <BrandMark />
-        {[["Início","inicio"],["Produtos","produtos"],["Categorias","categorias"],["Kits","kits"],["Sobre a MONST","sobre"],["Contato","contato"]].map(([label,id], i) => <button key={id} style={{ transitionDelay: `${i * 50}ms` }} onClick={() => scrollTo(id)}>{label}<ArrowRight /></button>)}
+        {navigation.map(([label,id], i) => <button key={id} style={{ transitionDelay: `${i * 50}ms` }} onClick={() => scrollTo(id)}>{label}<ArrowRight /></button>)}
       </div>
 
       {searchOpen && <div className="search-overlay" role="dialog" aria-modal="true" aria-label="Buscar produtos">
@@ -160,7 +161,7 @@ function MonstStore() {
         <div className="filter-row" aria-label="Filtros de produtos">{["Todos", "Whey Protein", "Creatina", "Pré-Treino", "Kits"].map((item) => <Button key={item} variant={category === item ? "default" : "ghost"} onClick={() => setCategory(item)}>{item}</Button>)}</div>
         {filtered.length > 0 ? <div className="product-grid">{filtered.map((product, index) => <article key={product.id} className={`product-card reveal product-${index % 3}`}>
           <div className="product-visual"><span className="product-tag">{product.oldPrice ? "OFERTA" : "NOVO"}</span><ProductVisual product={product} /></div>
-          <div className="product-info"><small>{product.category} · {product.flavor}</small><h3>{product.name}</h3><div className="rating"><span>★★★★★</span> 4,9</div><div className="price">{product.oldPrice && <s>{money.format(product.oldPrice)}</s>}<strong>{money.format(product.price)}</strong><small>ou 3x sem juros</small></div><Button variant="hero" onClick={() => addToCart(product)}>Comprar <Bag /></Button></div>
+          <div className="product-info"><small>{product.category} · {product.flavor}</small><h3>{product.name}</h3><div className="rating"><span>★★★★★</span> 4,9</div><div className="price">{product.oldPrice && <s>{money.format(product.oldPrice)}</s>}<strong>{money.format(product.price)}</strong><small>ou 3x sem juros</small></div><Button variant="hero" onClick={() => addToCart(product)}>Comprar <ShoppingBag /></Button></div>
         </article>)}</div> : <div className="empty-state"><Search /><h3>NENHUM MONST ENCONTRADO</h3><p>Tente outro filtro para continuar.</p><Button onClick={() => { setCategory("Todos"); setQuery(""); }}>Ver todos</Button></div>}
       </section>
 
@@ -170,7 +171,7 @@ function MonstStore() {
 
       <section id="kits" className="kit-section">
         <div className="kit-image reveal"><img src={kitImage} alt="Kit completo MONST.SA com whey, creatina, pré-treino e acessórios" width="1536" height="1280" loading="lazy" /><span className="kit-stamp">KIT<br />TOP</span></div>
-        <div className="kit-copy reveal"><span className="eyebrow">ROTINA COMPLETA / 04 ITENS</span><h2>KIT<br /><em>MONST</em></h2><p>Monte sua rotina. Potencialize seu treino. Um combo pensado para acompanhar cada fase do seu corre.</p><ul><li>Whey Protein 900g</li><li>Creatina 300g</li><li>Pré-Treino 300g</li><li>Coqueteleira MONST</li></ul><div><strong>R$ 299,90</strong><s>R$ 349,90</s></div><Button variant="ink" size="hero" onClick={() => addToCart(products[5])}>Quero meu kit <ArrowRight /></Button></div>
+        <div className="kit-copy reveal"><span className="eyebrow">ROTINA COMPLETA / 04 ITENS</span><h2>KIT<br /><em>MONST</em></h2><p>Monte sua rotina. Potencialize seu treino. Um combo pensado para acompanhar cada fase do seu corre.</p><ul><li>Whey Protein 900g</li><li>Creatina 300g</li><li>Pré-Treino 300g</li><li>Coqueteleira MONST</li></ul><div><strong>R$ 299,90</strong><s>R$ 349,90</s></div><Button variant="ink" size="hero" onClick={() => { const kit = products.find((product) => product.category === "Kits"); if (kit) addToCart(kit); }}>Quero meu kit <ArrowRight /></Button></div>
       </section>
 
       <section id="sobre" className="about-section section-shell">
