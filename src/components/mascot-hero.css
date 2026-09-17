@@ -1,12 +1,6 @@
 @keyframes hero-mascot-in {
-  from {
-    opacity: 0;
-    transform: translate3d(24px, 18px, 0) scale(0.965);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+  from { opacity: 0; transform: translate3d(24px, 18px, 0) scale(.965); }
+  to { opacity: 1; transform: none; }
 }
 
 .hero-art .hero-mascot-motion {
@@ -16,72 +10,28 @@
   flex: 0 1 650px;
   margin-left: clamp(0rem, 2vw, 2rem);
   z-index: 2;
-  animation: hero-mascot-in 0.7s cubic-bezier(0.22, 0.7, 0.25, 1) both;
-  will-change: transform, opacity;
+  overflow: visible;
+  animation: hero-mascot-in .7s cubic-bezier(.22,.7,.25,1) both;
 }
 
-.hero-art .hero-mascot-motion img {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  max-height: none;
-  object-fit: contain;
-  object-position: center;
-  border-radius: 0;
-  animation: none;
-  filter: drop-shadow(16px 20px 0 color-mix(in oklab, var(--foreground) 86%, transparent));
-}
-
-.hero-mascot-static {
-  display: none !important;
-}
-
-.hero-mascot-animated {
-  opacity: 1;
-}
+.hero-mascot-video { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.hero-mascot-canvas, .hero-mascot-static { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; }
+.hero-mascot-canvas { display: none; }
+.hero-mascot-static { display: none; filter: drop-shadow(16px 20px 0 color-mix(in oklab,var(--foreground) 86%,transparent)); }
 
 @media (max-width: 1024px) {
-  .hero-art .hero-mascot-motion {
-    width: min(100%, 560px);
-    flex-basis: 560px;
-    margin-left: 0;
-  }
+  .hero-art .hero-mascot-motion { width: min(100%, 560px); flex-basis: 560px; margin-left: 0; }
 }
 
 @media (max-width: 700px) {
-  .hero-section {
-    min-height: 920px;
-  }
-
-  .hero-art {
-    min-height: 380px;
-    align-items: flex-end;
-  }
-
-  .hero-art .hero-mascot-motion {
-    width: min(92vw, 430px);
-    flex-basis: auto;
-    margin: 0 auto;
-  }
-
-  .hero-art .hero-mascot-motion img {
-    filter: drop-shadow(12px 15px 0 color-mix(in oklab, var(--foreground) 86%, transparent));
-  }
+  .hero-section { min-height: 920px; }
+  .hero-art { min-height: 380px; align-items: flex-end; }
+  .hero-art .hero-mascot-motion { width: min(92vw, 430px); flex-basis: auto; margin: 0 auto; }
+  .hero-mascot-static, .hero-mascot-canvas { filter: drop-shadow(12px 15px 0 color-mix(in oklab,var(--foreground) 86%,transparent)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-art .hero-mascot-motion {
-    animation: none;
-    will-change: auto;
-  }
-
-  .hero-mascot-animated {
-    display: none !important;
-  }
-
-  .hero-mascot-static {
-    display: block !important;
-  }
+  .hero-art .hero-mascot-motion { animation: none; will-change: auto; }
+  .hero-mascot-video, .hero-mascot-canvas { display: none !important; }
+  .hero-mascot-static { display: block !important; }
 }
