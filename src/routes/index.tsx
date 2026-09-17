@@ -110,7 +110,7 @@ function MonstStore() {
           {navigation.map(([label,id]) => <button key={id} onClick={() => scrollTo(id)}>{label}</button>)}
         </nav>
         <div className="header-actions">
-          <Button variant="ghost" size="icon" aria-label="Pesquisar" onClick={() => setSearchOpen(true)}><Search /></Button>
+          <Button className="desktop-only" variant="ghost" size="icon" aria-label="Pesquisar" onClick={() => setSearchOpen(true)}><Search /></Button>
           <Button className="desktop-only" variant="ghost" size="icon" aria-label="Minha conta" onClick={() => toast("Área de conta demonstrativa")}><CircleUserRound /></Button>
           <Button variant="ghost" size="icon" className="cart-button" aria-label={`Carrinho com ${count} itens`} onClick={() => setCartOpen(true)}><ShoppingBag />{count > 0 && <span>{count}</span>}</Button>
           <Button className="desktop-buy" variant="hero" onClick={() => scrollTo("produtos")}>Comprar agora</Button>
